@@ -21,6 +21,21 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
+    let nameLabel: UILabel = {
+       let label = UILabel()
+        label.text = "SNACKS"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let nameLabel2: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.text = "ADD A SNACK"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     
     lazy var imageView1: UIImageView = {
         let imageV = UIImageView()
@@ -78,15 +93,23 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         navBarView.addSubview(stackView)
+        navBarView.addSubview(nameLabel)
+        navBarView.addSubview(nameLabel2)
         setupStackViewConstraints()
+        setupNameLabel()
+        setupNameLabel2()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.isHidden = true
+        nameLabel2.isHidden = true
+        nameLabel.isHidden = false
+        
         
         for imageView in stackView.arrangedSubviews
         {
             imageView.contentMode = .scaleAspectFit
         }
+        
        
     }
 
@@ -119,6 +142,25 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
         self.tableView.reloadData()
     }
 
+    func setupNameLabel() {
+        
+        nameLabel2.centerXAnchor.constraint(equalTo: navBarView.centerXAnchor).isActive = true
+        nameLabel2.topAnchor.constraint(equalTo: navBarView.topAnchor, constant: 15).isActive = true
+        nameLabel2.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        nameLabel2.heightAnchor.constraint(equalToConstant: 60).isActive = true
+  
+    }
+    
+    func setupNameLabel2() {
+        
+        nameLabel.centerXAnchor.constraint(equalTo: navBarView.centerXAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: navBarView.topAnchor, constant: 15).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+    }
+    
+    
     func setupStackViewConstraints() {
         stackView.leftAnchor.constraint(equalTo: navBarView.leftAnchor).isActive = true
         stackView.rightAnchor.constraint(equalTo: navBarView.rightAnchor).isActive = true
@@ -149,6 +191,8 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
     @IBAction func extendButton(_ sender: Any) {
         if navBarExtended == false {
             stackView.isHidden = false
+            nameLabel2.isHidden = false
+            nameLabel.isHidden = true
             UIView.animate(withDuration: 2.0 , delay: 0.0, usingSpringWithDamping: 0.3 , initialSpringVelocity: 3.0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
                 self.heightConstraint.constant = 200
                 self.view.layoutIfNeeded()
@@ -160,6 +204,8 @@ class ViewController: UIViewController , UITableViewDelegate , UITableViewDataSo
            
             } else if navBarExtended == true {
             stackView.isHidden = true
+            nameLabel2.isHidden = true
+            nameLabel.isHidden = false
             UIView.animate(withDuration: 2.0 , delay: 0.0, usingSpringWithDamping: 0.3 , initialSpringVelocity: 3.0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
                 self.heightConstraint.constant = 66
                 self.view.layoutIfNeeded()
